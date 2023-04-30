@@ -1,6 +1,8 @@
 package spring.coursework.TravelAgency.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 
@@ -19,6 +21,8 @@ public class Country {
     private int id;
 
     @Column(name = "name")
+    @NotEmpty(message = "Имя не должно быть пустым!")
+    @Size(min = 3, max = 50, message = "Имя должно быть диапозоне от 3 до 50 символов! ")
     private String name;
 
     @OneToMany(mappedBy = "owner")

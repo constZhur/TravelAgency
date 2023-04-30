@@ -11,5 +11,7 @@ import java.util.List;
 @Repository
 public interface TourRepository extends JpaRepository<Tour, Integer> {
     List<Tour> findByOwner(Country country);
-    //List<Tour> findAllToursByUsers(List<User> users);
+    List<Tour> findByUsers(User user);
+    void deleteTourByName(String name);
+
 }

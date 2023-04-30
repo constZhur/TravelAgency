@@ -56,26 +56,3 @@ public class CountryService {
 //    }
 }
 
-
-/*
-@Service
-@Transactional(readOnly = true)
-public class PeopleService {
-
-    private final PeopleRepository peopleRepository;
-
-    @Autowired
-    public PeopleService(PeopleRepository peopleRepository) {
-        this.peopleRepository = peopleRepository;
-    }
-
-    public List<Person> findAll() {
-        return peopleRepository.findAll();
-    }
-
-    public Person findOne(int id) {
-        Optional<Person> foundPerson = peopleRepository.findById(id);
-        return foundPerson.orElse(null);
-    }
-}
-* */

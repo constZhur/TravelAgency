@@ -1,33 +1,53 @@
 package spring.coursework.TravelAgency.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import spring.coursework.TravelAgency.models.Tour;
-import spring.coursework.TravelAgency.models.User;
 import spring.coursework.TravelAgency.services.TourService;
-import spring.coursework.TravelAgency.services.UserService;
 
-import java.util.List;
 
-@RestController
-@RequestMapping()
+@Controller
+@RequestMapping("/tours")
 public class TourController {
     private final TourService tourService;
-    private final UserService userService;
 
     @Autowired
-    public TourController(TourService tourService, UserService userService) {
+    public TourController(TourService tourService) {
         this.tourService = tourService;
-        this.userService = userService;
     }
 
-//    @GetMapping("/my_tours")
-//    public List <Tour> showUserTours(@RequestParam(value = "email", required = false) String email){
-//        email += "@gmail.com";
-//        User foundUser = userService.findUserByEmail(email);
-//        return tourService.findToursByUser(foundUser);
-//    }
+    @GetMapping()
+    public String getAllTours(Model model) {
+        model.addAttribute("tours", tourService.findAll());
+        return "tours/index";
+    }
+
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") int id, Model model) {
+        model.addAttribute("tour", tourService.findOne(id));
+        return "tours/show";
+    }
+
+    @GetMapping("/new")
+    public String createTour(@ModelAttribute("tour") Tour tour) {
+        return "/tours/new";
+    }
+
+    @PostMapping()
+    public String addTour(@ModelAttribute("tour") @Valid Tour tour, BindingResult bindingResult){
+        if (bindingResult.hasErrors())
+            return "/tours/new";
+        tourService.save(tour);
+        return "redirect:/tours";
+    }
+
+    @DeleteMapping("delete/{id}")
+    public String delete(@PathVariable("id") Integer id){
+        tourService.deleteById(id);
+        return "redirect:/tours";
+    }
 }

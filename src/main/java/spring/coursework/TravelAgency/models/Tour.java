@@ -2,6 +2,9 @@ package spring.coursework.TravelAgency.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,12 +24,17 @@ public class Tour {
     private int id;
 
     @Column(name = "name")
+    @NotEmpty(message = "Имя не должно быть пустым!")
+    @Size(min = 3, max = 50, message = "Имя должно быть диапозоне от 3 до 50 символов!")
     private String name;
 
     @Column(name = "price")
+    @Min(value = 100, message = "Цена должна быть не менее 100!")
     private int price;
 
     @Column(name = "description")
+    @NotEmpty(message = "Описание не должно быть пустым!")
+    @Size(min = 10, max = 500, message = "Описание должно быть диапозоне от 10 до 500 символов!")
     private String description;
 
     @ManyToOne

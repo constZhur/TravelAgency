@@ -25,13 +25,13 @@ public class User {
     private int id;
 
     @Column(name = "email")
-    @Email(message = "Email is invalid!")
-    @NotEmpty(message = "Email cannot be empty!")
+    @Email(message = "Некорректный ввод емаила!")
+    @NotEmpty(message = "Емаил не может быть пустым!")
     private String email;
 
     @Column(name = "password")
-    @Size(min = 8, message = "Password must contain more than 8 characters!")
-    @NotEmpty(message = "Password cannot be empty!")
+    @Size(min = 8, message = "Пароль должен состоять не менее из 8 символов!")
+    @NotEmpty(message = "Пароль не может быть пустым!")
     private String password;
 
     @ManyToMany
