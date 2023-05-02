@@ -37,12 +37,12 @@ public class Tour {
     @Size(min = 10, max = 500, message = "Описание должно быть диапозоне от 10 до 500 символов!")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     @JsonIgnore
     private Country owner;
 
-    @ManyToMany(mappedBy = "tours")
+    @ManyToMany(mappedBy = "tours", cascade = CascadeType.ALL)
     @JsonIgnore
     List<User> users;
 

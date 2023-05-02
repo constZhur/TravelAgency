@@ -24,10 +24,10 @@ public class CountryService {
         return countryRepository.findAll();
     }
 
-//    public Country findOne(Integer id){
-//        Optional<Country> foundCountry = countryRepository.findById(id);
-//        return foundCountry.orElse(null);
-//    }
+    public Country findById(Integer id){
+        Optional<Country> foundCountry = countryRepository.findById(id);
+        return foundCountry.orElse(null);
+    }
 
     public Country findByName(String name){
         return countryRepository.findByName(name);

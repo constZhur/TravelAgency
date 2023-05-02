@@ -25,8 +25,7 @@ public class Country {
     @Size(min = 3, max = 50, message = "Имя должно быть диапозоне от 3 до 50 символов! ")
     private String name;
 
-    @OneToMany(mappedBy = "owner")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     public List<Tour> tours;
 
     public void addTour(Tour tour){

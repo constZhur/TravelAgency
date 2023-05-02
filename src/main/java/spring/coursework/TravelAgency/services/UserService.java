@@ -3,6 +3,7 @@ package spring.coursework.TravelAgency.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import spring.coursework.TravelAgency.models.Country;
 import spring.coursework.TravelAgency.models.User;
 import spring.coursework.TravelAgency.repositories.UserRepository;
 
@@ -41,7 +42,11 @@ public class UserService {
     }
 
     @Transactional
-    public void delete(Integer id){
+    public void deleteById(Integer id){
         userRepository.deleteById(id);
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 }
