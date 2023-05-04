@@ -5,6 +5,10 @@
         <title>Туры</title>
     </head>
     <body>
+        <form th:action="@{/logout}" th:method="POST">
+            <input type="submit" value="Logout"/>
+        </form>
+        <a href="/logout">Выйти</a>
         <div th:each="tour : ${tours}">
             <a th:href="@{/tours/{id}(id=${tour.getId()})}"
                th:text="${tour.getName() + ', ' + tour.getPrice()}">tour</a>

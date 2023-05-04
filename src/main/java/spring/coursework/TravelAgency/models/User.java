@@ -31,6 +31,10 @@ public class User {
     @NotEmpty(message = "Пароль не может быть пустым!")
     private String password;
 
+    @Column(name = "role")
+    @NotEmpty()
+    private String role;
+
     @ManyToMany
     @JoinTable(
             name = "person_tour",
