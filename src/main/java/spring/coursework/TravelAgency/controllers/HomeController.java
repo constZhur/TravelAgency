@@ -15,15 +15,9 @@ public class HomeController {
         return "/home";
     }
 
-//    @GetMapping("/user")
-//    public String user(){
-////        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-////        UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
-////        System.out.println(userDetailsImpl.getUser());
-//        return "Hi, user!";
-//    }
     @GetMapping("/index")
-    public String admin(){
-        return "/index";
+    public String index(){
+        return "user/index";
     }
+
 }

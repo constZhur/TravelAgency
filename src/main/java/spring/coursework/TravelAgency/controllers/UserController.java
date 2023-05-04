@@ -6,8 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import spring.coursework.TravelAgency.models.Country;
-import spring.coursework.TravelAgency.models.Tour;
 import spring.coursework.TravelAgency.models.User;
 import spring.coursework.TravelAgency.services.TourService;
 import spring.coursework.TravelAgency.services.UserService;

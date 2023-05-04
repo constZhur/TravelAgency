@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,8 +44,12 @@ public class Tour {
     private Country owner;
 
     @ManyToMany(mappedBy = "tours", cascade = CascadeType.ALL)
-    @JsonIgnore
-    List<User> users;
+    List<User> users = new ArrayList<>();
+
+    public void addUser(User user){
+        user.getTours().add(this);
+        //this.users.add(user);
+    }
 
     @Override
     public boolean equals(Object o) {

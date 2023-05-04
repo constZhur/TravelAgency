@@ -1,9 +1,12 @@
 package spring.coursework.TravelAgency.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import spring.coursework.TravelAgency.models.Tour;
 import spring.coursework.TravelAgency.models.User;
 import spring.coursework.TravelAgency.repositories.UserRepository;
 
@@ -60,4 +63,16 @@ public class UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
+
+    public User getCurrentUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = findUserByEmail(auth.getName());
+        return user;
+    }
+
+//    public void deleteTour(Tour tour){
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        User user = findUserByEmail(auth.getName());
+//        user.deleteTour(tour);
+//    }
 }

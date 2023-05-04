@@ -7,20 +7,21 @@ import spring.coursework.TravelAgency.models.Country;
 import spring.coursework.TravelAgency.models.Tour;
 import spring.coursework.TravelAgency.models.User;
 import spring.coursework.TravelAgency.repositories.TourRepository;
+import spring.coursework.TravelAgency.repositories.UserRepository;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional(readOnly = true)
 public class TourService {
     private final TourRepository tourRepository;
+    private final UserRepository userRepository;
+
 
     @Autowired
-    public TourService(TourRepository tourRepository) {
+    public TourService(TourRepository tourRepository, UserRepository userRepository) {
         this.tourRepository = tourRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Tour> findAll() {
@@ -60,5 +61,26 @@ public class TourService {
     @Transactional
     public void deleteByName(String name){
         tourRepository.deleteTourByName(name);
+    }
+
+    @Transactional
+    public void addUserToTour(Integer tourId, User user) {
+        Tour tour = tourRepository.findById(tourId).get();
+        tour.addUser(user);
+        //tourRepository.save(tour);
+    }
+
+    public List<Tour> deleteDuplicates(List<Tour> a, List<Tour> b){
+        List<Tour> result = new ArrayList<>(a);
+        result.removeAll(b);
+        return result;
+    }
+
+    @Transactional
+    public void removeTourFromUser(int tourId, User user) {
+        Tour tour = tourRepository.findById(tourId).get();
+        userRepository.deleteUser(user.getId(), tourId);
+//        tour.getUsers().remove(user);
+//        userRepository.save(user);
     }
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Туры</title>
+    </head>
+    <body>
+        <form th:action="@{/logout}" th:method="POST">
+            <input type="submit" value="Выйти"/>
+        </form>
+        <hr/>
+        <div th:each="tour : ${tours}">
+            <p th:text="${'Название: ' + tour.getName()}">VALUE</p>
+            <p th:text="${'Цена: ' + tour.getPrice()}">VALUE</p>
+            <p th:text="${'Описание: ' + tour.getDescription()}">VALUE</p>
+            <form th:object="${country}" th:action="@{/{id}/tours(id=${country.getId()})}" th:method="POST">
+                <input type="hidden" th:name="tourId" th:value="${tour.getId()}"/>
+                <input  type="submit" value="Добавить"/>
+            </form>
+            <br/><hr/>
+        </div>
+    </body>
+</html>
+<!--
+th:name="tourId" th:value="${tour.getId()}"
+-->

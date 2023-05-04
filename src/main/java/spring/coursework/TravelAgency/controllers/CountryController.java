@@ -1,42 +1,61 @@
 package spring.coursework.TravelAgency.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import spring.coursework.TravelAgency.models.Country;
 import spring.coursework.TravelAgency.models.Tour;
+import spring.coursework.TravelAgency.models.User;
 import spring.coursework.TravelAgency.services.CountryService;
 import spring.coursework.TravelAgency.services.TourService;
+import spring.coursework.TravelAgency.services.UserService;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/offers")
+@Controller
+@RequestMapping()
 public class CountryController {
 
     private final CountryService countryService;
     private final TourService tourService;
+    private final UserService userService;
 
     @Autowired
-    public CountryController(CountryService countryService, TourService tourService) {
+    public CountryController(CountryService countryService, TourService tourService, UserService userService) {
         this.countryService = countryService;
         this.tourService = tourService;
+        this.userService = userService;
     }
 
-    @GetMapping()
-    public List<Country> index(){
-        return countryService.findAll();
+    //работает
+    @GetMapping("/countries")
+    public String allCountries(Model model){
+        model.addAttribute("countries", countryService.findAll());
+        return "country/countries";
     }
 
-    @GetMapping("/{name}")
-    public Country showCountry(@PathVariable("name") String name){
-        return countryService.findByName(name);
+//    @GetMapping("/{name}")
+//    public Country showCountry(@PathVariable("name") String name){
+//        return countryService.findByName(name);
+//    }
+
+    //работает
+    @GetMapping("/{id}/tours")
+    public String showTours(@PathVariable("id") Integer id, Model model){
+        Country owner = countryService.findById(id);
+        List<Tour> tours = tourService.deleteDuplicates(tourService.findByOwner(owner), userService.getCurrentUser().getTours());
+        model.addAttribute("tours", tours);
+        model.addAttribute("country", owner);
+        return "country/tours";
     }
 
-
-    @GetMapping("/{name}/tours")
-    public List<Tour> showTours(@PathVariable("name") String name){
-        Country owner = countryService.findByName(name);
-        return tourService.findByOwner(owner);
+    @PostMapping("/{id}/tours")
+    public String addTour(@PathVariable("id") Integer id, @RequestParam("tourId") Integer tourId) {
+        tourService.addUserToTour(tourId, userService.getCurrentUser());
+        return "redirect:/index";
     }
 }
 

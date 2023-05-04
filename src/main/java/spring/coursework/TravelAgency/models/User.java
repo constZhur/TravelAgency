@@ -5,7 +5,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,7 +34,6 @@ public class User {
     private String password;
 
     @Column(name = "role")
-    @NotEmpty()
     private String role;
 
     @ManyToMany
@@ -41,7 +42,8 @@ public class User {
             joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "tour_id")
     )
-    List<Tour> tours;
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    List<Tour> tours = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
@@ -55,4 +57,8 @@ public class User {
     public int hashCode() {
         return Objects.hash(id, email, password);
     }
+
+//    public void deleteTour(Tour tour){
+//        tours.remove(tour);
+//    }
 }

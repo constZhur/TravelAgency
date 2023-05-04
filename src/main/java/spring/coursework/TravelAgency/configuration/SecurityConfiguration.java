@@ -40,42 +40,28 @@ public class SecurityConfiguration {
         return authProvider;
     }
 
-    /*@Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails user = User.withUsername("user")
-                .password("password")
-                .roles("USER")
-                .build();
-        UserDetails admin = User.withUsername("admin")
-                .password("password")
-                .roles("ADMIN", "USER")
-                .build();
-        return new InMemoryUserDetailsManager(user, admin);
-    }*/
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.
                 authorizeHttpRequests().
-                requestMatchers("/auth/login", "/error", "/home", "/auth/registration").permitAll().
-                requestMatchers("/admin/").hasRole("ADMIN").
+                requestMatchers("/auth/**", "/home").permitAll().
+                requestMatchers("/admin/**").hasRole("ADMIN").
                 anyRequest().authenticated().
                 and().formLogin().
                 loginPage("/auth/login").
                 loginProcessingUrl("/process_login").
-                defaultSuccessUrl("/home", true).
+                successHandler((request, response, authentication) -> {
+                    if (userDetailsService.isAdmin(authentication.getName())) {
+                        response.sendRedirect("/admin/index");
+                    } else {
+                        response.sendRedirect("/index");
+                    }
+                }).
                 failureUrl("/auth/login?error").
                 and().
                 logout().
                 logoutUrl("/logout").
                 logoutSuccessUrl("/home");
-                 /*
-                .requestMatchers("/auth/**"").permitAll().
-                 requestMatchers("/admin").hasRole("ADMIN")
-                .anyRequest().authenticated();
-                and().*/
-        /*and().
-                httpBasic(withDefaults());*/
         return http.build();
     }
 
