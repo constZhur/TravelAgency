@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Все</title>
+  </head>
+  <body>
+    <form th:action="@{/logout}" th:method="POST">
+      <input type="submit" value="Выйти"/>
+    </form>
+    <div th:each="country : ${countries}">
+      <p th:text="${'Название: ' + country.getName()}">VALUE</p>
+      <br/><hr/>
+    </div>
+  </body>
+</html>

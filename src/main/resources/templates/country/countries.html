@@ -6,12 +6,12 @@
     </head>
     <body>
         <form th:action="@{/logout}" th:method="POST">
-            <input type="submit" value="Logout"/>
+            <input type="submit" value="Выйти"/>
         </form>
         <div th:each="country : ${countries}">
             <p th:text="${country.getName()}">VALUE</p>
             <br/>
-            <a th:href="@{/{id}/tours(id=${country.getId()})}">страна</a>
+            <a th:href="@{/{id}/tours(id=${country.getId()})}">Выбрать тур</a>
         </div>
     </body>
 </html>

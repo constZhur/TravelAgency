@@ -54,8 +54,16 @@ public class CountryController {
 
     @PostMapping("/{id}/tours")
     public String addTour(@PathVariable("id") Integer id, @RequestParam("tourId") Integer tourId) {
-        tourService.addUserToTour(tourId, userService.getCurrentUser());
+        User user = userService.getCurrentUser();
+        tourService.addUserToTour(tourId, user);
+        if (user.getRole().equals("ROLE_ADMIN")) return "redirect:/admin/index";
         return "redirect:/index";
+    }
+
+    @GetMapping("/admin/countries_info")
+    public String countriesInfo(Model model){
+        model.addAttribute("countries", countryService.findAll());
+        return "country/allCountries";
     }
 }
 

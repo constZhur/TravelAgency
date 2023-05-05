@@ -2,8 +2,6 @@ package spring.coursework.TravelAgency.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,9 +12,6 @@ import spring.coursework.TravelAgency.models.User;
 import spring.coursework.TravelAgency.services.CountryService;
 import spring.coursework.TravelAgency.services.TourService;
 import spring.coursework.TravelAgency.services.UserService;
-
-import java.security.Principal;
-import java.util.List;
 
 
 @Controller
@@ -57,30 +52,31 @@ public class TourController {
     @DeleteMapping("/my_tours")
     public String addTour(@RequestParam("tourId") Integer tourId) {
         tourService.removeTourFromUser(tourId, userService.getCurrentUser());
+        if (userService.getCurrentUser().getRole().equals("ROLE_ADMIN")) return "redirect:/admin/index";
         return "redirect:/index";
     }
 
 
 
-    @GetMapping()
+    @GetMapping("admin/tours_info")
     public String getAllTours(Model model) {
         model.addAttribute("tours", tourService.findAll());
-        return "tours/index";
+        return "tours/allTours";
     }
-
-    @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("tour", tourService.findOne(id));
-        return "tours/show";
-    }
-
-    @GetMapping("/new")
-    public String createTour(@ModelAttribute("tour") Tour tour, Model model) {
-        model.addAttribute("countries", countryService.findAll());
-        model.addAttribute("model", model);
-        return "/tours/new";
-    }
-
+//
+//    @GetMapping("/{id}")
+//    public String show(@PathVariable("id") int id, Model model) {
+//        model.addAttribute("tour", tourService.findOne(id));
+//        return "tours/show";
+//    }
+//
+//    @GetMapping("/new")
+//    public String createTour(@ModelAttribute("tour") Tour tour, Model model) {
+//        model.addAttribute("countries", countryService.findAll());
+//        model.addAttribute("model", model);
+//        return "/tours/new";
+//    }
+//
 //    @PostMapping()
 //    public String addTour(@ModelAttribute("tour") @Valid Tour tour, BindingResult bindingResult,
 //                          @RequestParam("countryId") Integer countryId, Model model){
@@ -93,10 +89,10 @@ public class TourController {
 //        tourService.save(tour);
 //        return "redirect:/tours";
 //    }
-
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") Integer id){
-        tourService.deleteById(id);
-        return "redirect:/tours";
-    }
+//
+//    @DeleteMapping("/{id}")
+//    public String delete(@PathVariable("id") Integer id){
+//        tourService.deleteById(id);
+//        return "redirect:/tours";
+//    }
 }
