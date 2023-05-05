@@ -58,7 +58,4 @@ public class User {
         return Objects.hash(id, email, password);
     }
 
-//    public void deleteTour(Tour tour){
-//        tours.remove(tour);
-//    }
 }

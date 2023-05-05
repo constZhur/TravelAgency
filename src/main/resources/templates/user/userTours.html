@@ -6,9 +6,24 @@
     </head>
     <body>
         <div th:each="tour : ${tours}">
-            <p th:text="${'Название: ' + tour.getName()}">VALUE</p>
-            <p th:text="${'Цена: ' + tour.getPrice()}">VALUE</p>
-            <p th:text="${'Описание: ' + tour.getDescription()}">VALUE</p>
+            <table>
+                <tr>
+                    <td>Название:</td>
+                    <td th:text="${tour.name}"></td>
+                </tr>
+                <tr>
+                    <td>Цена:</td>
+                    <td th:text="${tour.price}"></td>
+                </tr>
+                <tr>
+                    <td>Описание:</td>
+                    <td th:text="${tour.description}"></td>
+                </tr>
+                <tr>
+                    <td>Страна:</td>
+                    <td th:text="${tour.owner.name}"></td>
+                </tr>
+            </table>
             <form th:object="${tour}" th:action="@{my_tours}" th:method="DELETE">
                 <input type="hidden" th:name="tourId" th:value="${tour.getId()}"/>
                 <input  type="submit" value="Отказаться"/>

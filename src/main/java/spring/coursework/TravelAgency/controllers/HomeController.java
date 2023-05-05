@@ -14,7 +14,7 @@ public class HomeController {
 
     @GetMapping("/index")
     public String userHomePage(){
-        return "allUsers";
+        return "user/index";
     }
 
     @GetMapping("admin/index")

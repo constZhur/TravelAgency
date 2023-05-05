@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import spring.coursework.TravelAgency.models.Country;
 import spring.coursework.TravelAgency.models.Tour;
 import spring.coursework.TravelAgency.models.User;
@@ -13,6 +14,7 @@ import spring.coursework.TravelAgency.services.CountryService;
 import spring.coursework.TravelAgency.services.TourService;
 import spring.coursework.TravelAgency.services.UserService;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -64,6 +66,27 @@ public class CountryController {
     public String countriesInfo(Model model){
         model.addAttribute("countries", countryService.findAll());
         return "country/allCountries";
+    }
+
+    @GetMapping("/admin/add_country")
+    public String addCountry(Model model) {
+        //model.addAttribute("categories", countryService.listCategories());
+        model.addAttribute("countryForm", new Country());
+        return "country/addCountry";
+    }
+
+    @PostMapping("/admin/add_country")
+    public String addCountry(@RequestParam("file") MultipartFile file,
+                             @ModelAttribute("countryForm") Country countryForm)
+            throws IOException {
+        countryService.save(countryForm, file);
+        return "redirect:country/allCountries";
+    }
+
+    @DeleteMapping ("/admin/delete_country/{id}")
+    public String deleteProduct(@PathVariable Integer id) {
+        countryService.deleteById(id);
+        return "redirect:/products";
     }
 }
 
