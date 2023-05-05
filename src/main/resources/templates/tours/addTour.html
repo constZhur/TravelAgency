@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>Новый тур</title>
+  </head>
+  <body>
+    <form th:method="POST" th:action="@{/admin/add_tour}" th:object="${tour}">
+      <label for="country">Выберите страну: </label>
+      <select id="country" name="countryId">
+        <option th:each="country : ${countries}" th:value="${country.id}" th:text="${country.name}"></option>
+      </select>
+      <br/>
+      <label for="name">Введите имя: </label>
+      <input type="text" th:field="*{name}" id="name">
+      <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Ошибка в имени</div>
+      <br/>
+      <label for="price">Введите цену тура: </label>
+      <input type="number" min="100" th:field="*{price}" id="price">
+      <div style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Ошибка в цене</div>
+      <br/>
+      <label for="description">Введите краткое описание тура: </label>
+      <textarea th:field="*{description}" id="description"></textarea>
+      <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Ошибка в описании</div>
+      <br/>
+      <input type="submit" value="Добавить">
+    </form>
+  </body>
+</html>

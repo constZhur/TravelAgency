@@ -9,7 +9,20 @@
       <input type="submit" value="Выйти"/>
     </form>
     <div th:each="country : ${countries}">
-      <p th:text="${'Название: ' + country.getName()}">VALUE</p>
+        <tr>
+          <td>Название:</td>
+          <td th:text="${country.name}"></td>
+        </tr>
+        <br/>
+        <tr>
+          <td>Описание:</td>
+          <td th:text="${country.description}"></td>
+        </tr>
+      </table>
+      <img th:src="@{/flags/{id}(id=${country.getFlagId()})}" alt="" src="">
+      <form th:action="@{/admin/delete_country/{id}(id=${country.getId()})}" th:method="DELETE">
+        <button type="submit" class="btn btn-danger">Удалить</button>
+      </form>
       <br/><hr/>
     </div>
   <a href="/admin/add_country">Добавить новую страну</a>

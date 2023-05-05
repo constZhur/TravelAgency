@@ -43,6 +43,10 @@ public class Country {
     @JoinColumn(name = "flag_id")
     private CountryFlag flag;
 
+    public Integer getFlagId(){
+        return this.flag.getId();
+    }
+
     public Country(String name){
         this.name = name;
     }

@@ -5,6 +5,10 @@
         <title>Возможности пользователя</title>
     </head>
     <body>
+        <h1>Главная страница</h1>
+        <form th:action="@{/logout}" th:method="POST">
+            <input type="submit" value="Выйти"/>
+        </form>
         <a href="/my_tours">Мои туры</a>
         <br/>
         <a href="/countries">Поехать в тур</a>

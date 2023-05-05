@@ -5,20 +5,38 @@
         <title>Туры</title>
     </head>
     <body>
+       <h1>Информация о всех турах</h1>
         <form th:action="@{/logout}" th:method="POST">
             <input type="submit" value="Выйти"/>
         </form>
-        </div>
-        <div th:each="tour : ${tours}">
-            <p th:text="${'Название: ' + tour.getName()}">VALUE</p>
-            <p th:text="${'Цена: ' + tour.getPrice()}">VALUE</p>
-            <p th:text="${'Описание: ' + tour.getDescription()}">VALUE</p>
+       <div th:each="tour : ${tours}">
+           <table>
+               <tr>
+                   <td>Название:</td>
+                   <td th:text="${tour.name}"></td>
+               </tr>
+               <tr>
+                   <td>Цена:</td>
+                   <td th:text="${tour.price}"> ₽</td>
+               </tr>
+               <tr>
+                   <td>Описание:</td>
+                   <td th:text="${tour.description}"></td>
+               </tr>
+               <tr>
+                   <td>Страна:</td>
+                   <td th:text="${tour.owner.name}"></td>
+               </tr>
+           </table>
+           <form th:action="@{/admin/delete_tour/{id}(id=${tour.getId()})}" th:method="DELETE">
+               <button type="submit" class="btn btn-danger">Удалить</button>
+           </form>
             <!--<form th:object="${tour}" th:action="@{my_tours}" th:method="DELETE">
                 <input type="hidden" th:name="tourId" th:value="${tour.getId()}"/>
                 <input  type="submit" value="Отказаться"/>
             </form>-->
             <br/><hr/>
         </div>
-        <!--<a href="/tours/new">Create new tour</a>-->
+        <a href="/admin/add_tour">Добавить новый тур</a>
     </body>
 </html>

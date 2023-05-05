@@ -45,6 +45,9 @@ public class User {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     List<Tour> tours = new ArrayList<>();
 
+    @Column(name = "active")
+    private boolean active;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

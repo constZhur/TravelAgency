@@ -21,7 +21,7 @@ public class FlagController {
         this.flagRepository = flagRepository;
     }
 
-    @GetMapping("/images/{id}")
+    @GetMapping("/flags/{id}")
     private ResponseEntity<?> getImageById(@PathVariable Integer id){
         CountryFlag flag = flagRepository.findById(id).orElse(null);
         assert flag != null;

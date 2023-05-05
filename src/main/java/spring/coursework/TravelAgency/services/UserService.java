@@ -10,6 +10,7 @@ import spring.coursework.TravelAgency.models.Tour;
 import spring.coursework.TravelAgency.models.User;
 import spring.coursework.TravelAgency.repositories.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,15 +45,26 @@ public class UserService {
     }
 
     @Transactional
-    public void update(Integer id, User updatedUser){
-        updatedUser.setId(id);
+    public void updateActivity(boolean isActive, User updatedUser){
         userRepository.save(updatedUser);
     }
 
     @Transactional
-    public void setAdmin(User updatedUser){
+    public void setAdminStatus(User updatedUser){
         updatedUser.setRole("ROLE_ADMIN");
         userRepository.save(updatedUser);
+    }
+
+    @Transactional
+    public void setUserStatus(User updatedUser){
+        updatedUser.setRole("ROLE_USER");
+        userRepository.save(updatedUser);
+    }
+
+    public List<User> deleteCurrentUser(List<User> users, User user){
+        List<User> result = new ArrayList<>(users);
+        result.remove(user);
+        return result;
     }
 
     @Transactional
@@ -66,8 +78,7 @@ public class UserService {
 
     public User getCurrentUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = findUserByEmail(auth.getName());
-        return user;
+        return findUserByEmail(auth.getName());
     }
 
 //    public void deleteTour(Tour tour){

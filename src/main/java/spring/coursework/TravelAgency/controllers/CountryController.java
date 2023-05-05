@@ -39,10 +39,6 @@ public class CountryController {
         return "country/countries";
     }
 
-//    @GetMapping("/{name}")
-//    public Country showCountry(@PathVariable("name") String name){
-//        return countryService.findByName(name);
-//    }
 
     //работает
     @GetMapping("/{id}/tours")
@@ -70,7 +66,6 @@ public class CountryController {
 
     @GetMapping("/admin/add_country")
     public String addCountry(Model model) {
-        //model.addAttribute("categories", countryService.listCategories());
         model.addAttribute("countryForm", new Country());
         return "country/addCountry";
     }
@@ -80,13 +75,13 @@ public class CountryController {
                              @ModelAttribute("countryForm") Country countryForm)
             throws IOException {
         countryService.save(countryForm, file);
-        return "redirect:country/allCountries";
+        return "redirect:/admin/countries_info";
     }
 
     @DeleteMapping ("/admin/delete_country/{id}")
-    public String deleteProduct(@PathVariable Integer id) {
+    public String deleteCountry(@PathVariable Integer id) {
         countryService.deleteById(id);
-        return "redirect:/products";
+        return "redirect:/admin/countries_info";
     }
 }
 
