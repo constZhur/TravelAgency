@@ -20,6 +20,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -46,6 +47,8 @@ public class UserService {
 
     @Transactional
     public void updateActivity(boolean isActive, User updatedUser){
+        updatedUser.setActive(isActive);
+        if (updatedUser.getRole().equals("ROLE_ADMIN")) updatedUser.setRole("ROLE_USER");
         userRepository.save(updatedUser);
     }
 
@@ -81,9 +84,4 @@ public class UserService {
         return findUserByEmail(auth.getName());
     }
 
-//    public void deleteTour(Tour tour){
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        User user = findUserByEmail(auth.getName());
-//        user.deleteTour(tour);
-//    }
 }

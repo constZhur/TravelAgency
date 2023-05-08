@@ -31,19 +31,6 @@ public class TourController {
         this.userService = userService;
     }
 
-//    @GetMapping("/tours")
-//    public String showTours(Model model) {
-//        List<Tour> tours = tourService.findAll();
-//        model.addAttribute("tours", tours);
-//        model.addAttribute("tour", new Tour());
-//        return "tours";
-//    }
-
-//    @PostMapping("/{id}/tours")
-//    public String addTour(@ModelAttribute("tour") Tour tour) {
-//        tourService.save(tour);
-//        return "redirect:/index";
-//    }
 
     @GetMapping ("/my_tours")
     public String showUserTours(Model model) {
@@ -91,36 +78,4 @@ public class TourController {
         tourService.deleteById(id);
         return "redirect:/admin/tours_info";
     }
-//
-//    @GetMapping("/{id}")
-//    public String show(@PathVariable("id") int id, Model model) {
-//        model.addAttribute("tour", tourService.findOne(id));
-//        return "tours/show";
-//    }
-//
-//    @GetMapping("/new")
-//    public String createTour(@ModelAttribute("tour") Tour tour, Model model) {
-//        model.addAttribute("countries", countryService.findAll());
-//        model.addAttribute("model", model);
-//        return "/tours/new";
-//    }
-//
-//    @PostMapping()
-//    public String addTour(@ModelAttribute("tour") @Valid Tour tour, BindingResult bindingResult,
-//                          @RequestParam("countryId") Integer countryId, Model model){
-//        if (bindingResult.hasErrors()){
-//            createTour(tour, model);
-//            return "/tours/new";
-//        }
-//        Country country = countryService.findById(countryId);
-//        tour.setOwner(country);
-//        tourService.save(tour);
-//        return "redirect:/tours";
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public String delete(@PathVariable("id") Integer id){
-//        tourService.deleteById(id);
-//        return "redirect:/tours";
-//    }
 }
