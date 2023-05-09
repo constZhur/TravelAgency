@@ -65,4 +65,10 @@ public class Tour {
     public int hashCode() {
         return Objects.hash(id, name, price, description);
     }
+
+    public Tour(String name, int price, String description){
+        this.name = name;
+        this.price = price;
+        this.description = description;
+    }
 }

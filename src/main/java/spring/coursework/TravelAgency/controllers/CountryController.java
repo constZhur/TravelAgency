@@ -36,6 +36,7 @@ public class CountryController {
     @GetMapping("/countries")
     public String allCountries(Model model){
         model.addAttribute("countries", countryService.findAll());
+        model.addAttribute("currentUser", userService.getCurrentUser());
         return "country/countries";
     }
 
@@ -47,6 +48,7 @@ public class CountryController {
         List<Tour> tours = tourService.deleteDuplicates(tourService.findByOwner(owner), userService.getCurrentUser().getTours());
         model.addAttribute("tours", tours);
         model.addAttribute("country", owner);
+        //model.addAttribute("currentUser", userService.getCurrentUser());
         return "country/tours";
     }
 

@@ -36,6 +36,7 @@ public class TourController {
     public String showUserTours(Model model) {
         User user = userService.getCurrentUser();
         model.addAttribute("tours", tourService.getToursByUser(user));
+        //model.addAttribute("currentUser", userService.getCurrentUser());
         return "user/userTours";
     }
 
@@ -49,6 +50,7 @@ public class TourController {
     @GetMapping("admin/tours_info")
     public String getAllTours(Model model) {
         model.addAttribute("tours", tourService.findAll());
+        //model.addAttribute("currentUser", userService.getCurrentUser());
         return "tours/allTours";
     }
 
@@ -57,6 +59,7 @@ public class TourController {
     public String createTour(@ModelAttribute("tour") Tour tour, Model model) {
         model.addAttribute("countries", countryService.findAll());
         model.addAttribute("model", model);
+        //model.addAttribute("currentUser", userService.getCurrentUser());
         return "tours/addTour";
     }
 

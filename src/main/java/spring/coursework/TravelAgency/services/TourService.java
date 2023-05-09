@@ -37,6 +37,11 @@ public class TourService {
         return foundCountry.orElse(null);
     }
 
+    public Tour findByName(String name){
+        Optional<Tour> foundCountry = tourRepository.findByName(name);
+        return foundCountry.orElse(null);
+    }
+
 
     public List<Tour> getToursByUser(User user) {
         return tourRepository.findByUsers(user);
@@ -59,15 +64,9 @@ public class TourService {
     }
 
     @Transactional
-    public void deleteByName(String name){
-        tourRepository.deleteTourByName(name);
-    }
-
-    @Transactional
     public void addUserToTour(Integer tourId, User user) {
         Tour tour = tourRepository.findById(tourId).get();
         tour.addUser(user);
-        //tourRepository.save(tour);
     }
 
     public List<Tour> deleteDuplicates(List<Tour> a, List<Tour> b){
@@ -80,7 +79,5 @@ public class TourService {
     public void removeTourFromUser(int tourId, User user) {
         Tour tour = tourRepository.findById(tourId).get();
         userRepository.deleteUser(user.getId(), tourId);
-//        tour.getUsers().remove(user);
-//        userRepository.save(user);
     }
 }

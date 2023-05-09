@@ -58,21 +58,10 @@ public class CountryService {
             countryRepository.save(country);
         }
     }
-//
-//    @Transactional
-//    public void update(Integer id, Country updatedCountry){
-//        updatedCountry.setId(id);
-//        countryRepository.save(updatedCountry);
-//    }
-//
+
     @Transactional
     public void deleteById(Integer id){
         countryRepository.deleteById(id);
     }
-//
-//
-//    public List<Country> filterByName() {
-//        return countryRepository.findAll(Sort.by("name"));
-//    }
 }
 

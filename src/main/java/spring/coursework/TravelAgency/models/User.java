@@ -62,4 +62,9 @@ public class User {
         return Objects.hash(id, email, password);
     }
 
+    public User(String email, String password){
+        this.email = email;
+        this.password = password;
+    }
+
 }

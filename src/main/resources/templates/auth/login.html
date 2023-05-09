@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
   <head>
       <meta charset="UTF-8" xmlns:th="http://thymeleaf.org">
@@ -23,4 +23,52 @@
     <a href="/auth/registration">Зарегистрируйся!</a>
     <script href="/static/js/bootstrap.bundle.min.js"></script>
   </body>
+</html>-->
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Вход</title>
+  <link href="/static/css/auth.css" rel="stylesheet">
+  <link rel="shortcut icon" href="/static/img/favicon.png" type="image/png">
+</head>
+<body>
+<div class="center">
+  <h1>Вход</h1>
+  <form name="f" method="post" action="/process_login">
+  <!--<form th:method="POST" th:action="@{/auth/registration}" th:object="${user}">-->
+    <input type="hidden" th:name = "${_csrf.parameterName}" th:value="${_csrf.token}">
+    <div class="txt_field">
+      <!--<input type="email" required th:field="*{email}">-->
+      <input type="email" name="username">
+      <span></span>
+      <label>Почта</label>
+    </div>
+    <div class="txt_field">
+      <input type="password" name="password">
+      <!--<input type="password" required th:field="*{password}">-->
+      <span></span>
+      <label>Пароль</label>
+    </div>
+    <div style="color: red" th:if="${param.error}">
+      Неверные имя или пароль
+    </div>
+    <input type="submit" value="Войти">
+    <div class="signup_link">
+      Ещё не с нами? <a href="/auth/registration">Зарегистрироваться</a>
+    </div>
+  </form>
+</div>
+<script href="/static/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

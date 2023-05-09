@@ -41,6 +41,7 @@ public class UserService {
     public void save(User user){
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setRole("ROLE_USER");
+        user.setActive(true);
         user.setPassword(encodedPassword);
         userRepository.save(user);
     }
@@ -70,10 +71,6 @@ public class UserService {
         return result;
     }
 
-    @Transactional
-    public void deleteById(Integer id){
-        userRepository.deleteById(id);
-    }
 
     public List<User> findAll() {
         return userRepository.findAll();
@@ -82,6 +79,11 @@ public class UserService {
     public User getCurrentUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return findUserByEmail(auth.getName());
+    }
+
+    @Transactional
+    public void deleteUserById(Integer id){
+        userRepository.deleteById(id);
     }
 
 }

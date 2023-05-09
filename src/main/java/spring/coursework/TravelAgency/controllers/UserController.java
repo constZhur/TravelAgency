@@ -28,6 +28,7 @@ public class UserController {
     @GetMapping("admin/users_info")
     public String getAllUsers(Model model) {
         model.addAttribute("users", userService.deleteCurrentUser(userService.findAll(), userService.getCurrentUser()));
+        //model.addAttribute("currentUser", userService.getCurrentUser());
         return "/user/allUsers";
     }
 
